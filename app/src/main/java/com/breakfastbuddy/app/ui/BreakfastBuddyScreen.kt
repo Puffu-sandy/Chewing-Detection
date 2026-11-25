@@ -5,9 +5,6 @@ import android.content.pm.PackageManager
 import android.speech.tts.TextToSpeech
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -155,7 +152,7 @@ fun BreakfastBuddyScreen() {
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // 左側主區域 (70%)：YouTube 播放器 + 暫停提醒遮罩 + 網址列
+                    // 左側主區域 (68%)：YouTube 播放器 + 暫停提醒遮罩 + 網址列
                     Column(
                         modifier = Modifier
                             .weight(0.68f)
@@ -332,12 +329,7 @@ private fun VideoStageWithOverlay(
             )
 
             // 暫停時的醒目溫馨提醒覆蓋層
-            AnimatedVisibility(
-                visible = uiState.isMonitoring && !uiState.shouldPlayVideo,
-                enter = fadeIn(),
-                exit = fadeOut(),
-                modifier = Modifier.fillMaxSize()
-            ) {
+            if (uiState.isMonitoring && !uiState.shouldPlayVideo) {
                 val overlayColor = when (uiState.phase) {
                     MonitoringPhase.PAUSED_FAKE_CHEWING -> Color(0xE6B71C1C)
                     MonitoringPhase.PAUSED_STOPPED_CHEWING -> Color(0xE6E65100)
